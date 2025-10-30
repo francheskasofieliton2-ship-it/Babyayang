@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purple Glass PIN Pad</title>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #b388ff, #7c4dff, #512da8);
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 25px 30px;
+      border-radius: 35px 10px 35px 10px;
+      box-shadow: 0 4px 40px rgba(130, 100, 255, 0.4),
+                  inset 0 0 20px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      width: 290px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: 0.4s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .pin-display {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: white;
+      margin: 0 4px;
+      opacity: 0.3;
+      transition: 0.3s;
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+    }
+
+    .dot.active {
+      opacity: 1;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 70px);
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .key {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      user-select: none;
+      backdrop-filter: blur(5px);
+    }
+
+    .key:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.07);
+    }
+
+    .key:active {
+      transform: scale(0.9);
+      opacity: 0.8;
+    }
+
+    .clear {
+      background: rgba(230, 200, 255, 0.25);
+      color: #4a148c;
+      font-weight: 700;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      min-height: 22px;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        width: 240px;
+        padding: 20px;
+        border-radius: 25px 8px 25px 8px;
+      }
+      .key {
+        width: 60px;
+        height: 60px;
+        font-size: 1.1rem;
+      }
+      .keypad {
+        grid-template-columns: repeat(3, 60px);
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Enter PIN</h1>
+
+    <div class="pin-display">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div class="keypad">
+      <div class="key">1</div>
+      <div class="key">2</div>
+      <div class="key">3</div>
+      <div class="key">4</div>
+      <div class="key">5</div>
+      <div class="key">6</div>
+      <div class="key">7</div>
+      <div class="key">8</div>
+      <div class="key">9</div>
+      <div class="key clear">C</div>
+      <div class="key">0</div>
+      <div class="key">⏎</div>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    const keys = document.querySelectorAll(".key");
+    const dots = document.querySelectorAll(".dot");
+    const message = document.getElementById("message");
+    let pin = "";
+    const correctPin = "121924"; // 💜 Your PIN
+
+    keys.forEach(key => {
+      key.addEventListener("click", () => {
+        const value = key.textContent.trim();
+
+        if (value === "C") {
+          pin = "";
+          updateDots();
+          message.textContent = "";
+        } else if (value === "⏎") {
+          if (pin === correctPin) {
+            message.textContent = "✅ Access Granted!";
+            message.style.color = "#b388ff";
+            // 💜 Redirect to another page after short delay
+            setTimeout(() => {
+              window.location.href = "nextpage.html"; 
+              // Change this to your page file name or URL
+            }, 1000);
+          } else {
+            message.textContent = "❌ Incorrect PIN";
+            message.style.color = "#ffb3b3";
+          }
+          pin = "";
+          updateDots();
+        } else if (pin.length < 6) {
+          pin += value;
+          updateDots();
+        }
+      });
+    });
+
+    function updateDots() {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i < pin.length);
+      });
+    }
+  </script>
+</body>
+</html>
