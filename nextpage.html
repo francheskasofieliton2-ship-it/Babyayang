@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love 💜</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #b37aff, #d8a4ff, #f1d4ff);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .container {
+    background: rgba(120, 60, 160, 0.4);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 40% 10% 40% 10%;
+    box-shadow: 0 0 30px rgba(190, 100, 255, 0.5);
+    width: 90%;
+    max-width: 400px;
+    margin: 50px 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  h1 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 1em;
+    line-height: 1.6;
+  }
+
+  .hidden {
+    display: none;
+    margin-top: 15px;
+    animation: fadeIn 1.5s ease forwards;
+  }
+
+  .camera {
+    font-size: 2.2em;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .camera:hover {
+    transform: scale(1.1);
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    opacity: 0.7;
+    animation: floatUp 6s linear infinite;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-100vh) scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>To the Love of My Life 💜</h1>
+  <p>
+    Meeting you was the most beautiful turn my life has ever taken.<br>
+    You brought peace to my chaos and warmth to my coldest days.<br>
+    Loving you wasn’t something I planned, it was something my heart chose, naturally and fearlessly.<br><br>
+    Thank you for choosing me too.<br>
+    For loving me in your quiet ways, for staying even when things get hard, and for reminding me what love truly feels like.<br>
+    I’ll always be with you, right beside you when you need comfort, and right behind you when you need strength. 💜
+  </p>
+
+  <div class="camera" onclick="revealMessage()">📸</div>
+
+  <div class="hidden" id="hiddenMessage">
+    <p>
+      Remember, you’ll always have me.<br>
+      You never have to face the world alone or pretend to be okay when you’re not.<br>
+      I’ll love you through your calm and your storms, through laughter and tears, through everything that makes you you.<br><br>
+
+      Earlier, we talked about love, how it doesn’t depend on appeal or perfection.<br>
+      Real love goes beyond reason, beyond distance, beyond fear.<br>
+      It’s unconditional, it’s giving and receiving with an open heart, over and over again.<br><br>
+
+      When our teacher once asked us to write what love is,<br>
+      you were the first person who came to my mind.<br>
+      Because everything we studied earlier about how love doesn’t depend on appearance,<br>
+      how it accepts imperfections, and how it takes risks, you proved all of that to me.<br><br>
+
+      You showed me the kind of love that endures, that forgives, that stays.<br>
+      And that love, the one you’ve given me, is something I will never betray.<br><br>
+
+      You are the most wonderful person I’ve ever known,<br>
+      the best part of my life, and the one I’ll keep choosing, every single day. 💜
+    </p>
+  </div>
+</div>
+
+<script>
+  function revealMessage() {
+    document.getElementById("hiddenMessage").style.display = "block";
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  // Floating hearts
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.textContent = Math.random() > 0.5 ? "💜" : "💙";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (5 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 7000);
+  }
+
+  setInterval(createHeart, 600);
+</script>
+
+</body>
+</html>
